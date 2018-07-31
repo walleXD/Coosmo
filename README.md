@@ -2,7 +2,7 @@
 
 ## What's this?
 
-**Cosmo** is a Reddit desktop client aimed at providing glorious Redditing expereince on desktops with the goal of hooking into native functionalities which make all desktop app expereinces more enjoyable.
+**Coosmo** is a Reddit desktop client aimed at providing glorious Redditing expereince on desktops with the goal of hooking into native functionalities which make all desktop app expereinces more enjoyable.
 
 ## Where are we at?
 

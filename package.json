@@ -6,6 +6,7 @@
   "devDependencies": {
     "@babel/preset-react": "^7.0.0-beta.55",
     "babel-eslint": "^8.2.6",
+    "babel-plugin-inline-dotenv": "^1.1.2",
     "electron": "^2.0.5",
     "electron-builder": "^20.26.0",
     "electron-devtools-installer": "^2.2.4",
@@ -25,6 +26,7 @@
   },
   "dependencies": {
     "connected-react-router": "^4.3.0",
+    "cross-fetch": "^2.2.2",
     "electron-window-state": "^4.1.1",
     "js-base64": "^2.4.8",
     "react": "^16.4.1",
@@ -38,7 +40,8 @@
     "redux-observable": "^1.0.0",
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.2.2",
-    "source-map-support": "^0.5.6"
+    "source-map-support": "^0.5.6",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "dev": "electron-webpack dev",

@@ -20,11 +20,24 @@
     "eslint-plugin-react": "^7.10.0",
     "eslint-plugin-standard": "^3.1.0",
     "prettier": "^1.14.0",
+    "redux-logger": "^3.0.6",
     "webpack": "^4.16.3"
   },
   "dependencies": {
+    "connected-react-router": "^4.3.0",
+    "electron-window-state": "^4.1.1",
+    "js-base64": "^2.4.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-hot-loader": "^4.3.4",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-form": "^7.4.2",
+    "redux-observable": "^1.0.0",
+    "redux-thunk": "^2.3.0",
+    "rxjs": "^6.2.2",
     "source-map-support": "^0.5.6"
   },
   "scripts": {

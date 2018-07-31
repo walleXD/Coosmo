@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from "electron"
 import * as path from "path"
 import { format as formatUrl } from "url"
+import windowStateKeeper from "electron-window-state"
 
 const isDev = process.env.NODE_ENV !== "production"
 
@@ -8,7 +9,18 @@ const isDev = process.env.NODE_ENV !== "production"
 let mainWindow
 
 function createMainWindow() {
-  const window = new BrowserWindow()
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: 1000,
+    defaultHeight: 800
+  })
+
+  const window = new BrowserWindow({
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height
+  })
+  mainWindowState.manage(window)
 
   if (isDev) {
     window.webContents.openDevTools()

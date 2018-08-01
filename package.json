@@ -29,6 +29,7 @@
     "cross-fetch": "^2.2.2",
     "electron-window-state": "^4.1.1",
     "js-base64": "^2.4.8",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-hot-loader": "^4.3.4",

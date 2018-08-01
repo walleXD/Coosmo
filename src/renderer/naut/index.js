@@ -3,20 +3,23 @@ import { URL, URLSearchParams } from "url"
 import fetch from "cross-fetch"
 
 export default ({ clientId = "", deviceId = "", clientType = "app" }) => {
-  const auth = {
+  const data = {
     clientType,
     clientId,
-    tokens: {},
+    tokens: {
+      accessToken: "",
+      refreshToken: ""
+    },
     loggedIn: false
   }
 
   // get stored data
-  const getAuthTokens = () => auth.tokens
+  const getAuthTokens = () => data.tokens
 
-  const isLoggedIn = () => auth.loggedIn
+  const isLoggedIn = () => data.loggedIn
 
   const setAuthTokens = tokens => {
-    auth.tokens = tokens
+    data.tokens = tokens
   }
 
   // actions with auth info
@@ -32,14 +35,15 @@ export default ({ clientId = "", deviceId = "", clientType = "app" }) => {
       method: "post",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${Base64.encode(`${auth.clientId}:`)}`
+        Authorization: `Basic ${Base64.encode(`${data.clientId}:`)}`
       }
     }
     try {
       const rawResponse = await fetch(fetchTokenURL, fetchConfig)
       const { access_token: accessToken, ...rest } = await rawResponse.json()
-      auth.tokens.accessToken = accessToken
+      data.tokens.accessToken = accessToken
       console.log(rest)
+      console.log(data.tokens)
     } catch (e) {
       throw new Error(e.message)
     }

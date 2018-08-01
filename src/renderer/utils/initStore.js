@@ -15,7 +15,6 @@ export default (
     dependencies: { coosmonaut }
   })
 
-  coosmonaut.fetchAuthTokens()
   // Middlewares setup
   const prodMiddlewares = [
     routerMiddleware(history),

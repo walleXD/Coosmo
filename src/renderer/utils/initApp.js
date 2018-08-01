@@ -6,6 +6,9 @@ import allEpics from "../epics"
 import initNaut from "../naut"
 import createStore from "../utils/initStore"
 
+import "typeface-roboto/index.css"
+import "material-design-icons/iconfont/material-icons.css"
+
 export default () => {
   const history = createMemoryHistory()
   const deviceId = createUUID(process.env.USER, DNS).slice(16)

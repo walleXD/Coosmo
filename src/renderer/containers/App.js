@@ -1,24 +1,38 @@
-import React from "react"
-import { Provider as ReduxProvider } from "react-redux"
-import { ConnectedRouter as Router } from "connected-react-router"
+import React, { PureComponent } from "react"
 import { hot } from "react-hot-loader"
 import { compose } from "recompose"
+import { connect } from "react-redux"
+import { func, object } from "prop-types"
+import { ConnectedRouter as Router } from "connected-react-router"
 
 import Pages from "../pages"
-import initApp from "../utils/initApp"
 import withMaterialRoot from "../utils/withMaterialRoot"
+import { initClient } from "../actions"
 
-const { store, history } = initApp()
+class App extends PureComponent {
+  static propTypes = {
+    initClient: func,
+    history: object
+  }
 
-const App = () => (
-  <ReduxProvider store={store}>
-    <Router history={history}>
-      <Pages />
-    </Router>
-  </ReduxProvider>
-)
+  componentDidMount() {
+    this.props.initClient()
+  }
+
+  render() {
+    return (
+      <Router history={this.props.history}>
+        <Pages />
+      </Router>
+    )
+  }
+}
 
 export default compose(
   hot(module),
+  connect(
+    null,
+    { initClient }
+  ),
   withMaterialRoot
 )(App)

@@ -50,7 +50,7 @@ export default ({ clientId = "", deviceId = "", clientType = "app" }) => {
   }
 
   const refreshAuthTokens = async () => {
-    switch (clientType) {
+    switch (data.clientType) {
       case "app":
         return fetchAuthTokens()
       default:

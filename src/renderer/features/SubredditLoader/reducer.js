@@ -1,14 +1,12 @@
 import { setPosts, setErrorState, setLoadingState } from "./types"
 const initialState = {
   loadingPosts: false,
-  error: "",
-  subreddits: {
-    // nyc: {
-    //   before: "",
-    //   after: "",
-    //   posts: []
-    // }
-  }
+  error: ""
+  // nyc: {
+  //   before: "",
+  //   after: "",
+  //   posts: []
+  // }
 }
 
 export default (state = initialState, { type, payload }) => {
@@ -16,24 +14,18 @@ export default (state = initialState, { type, payload }) => {
     case setPosts:
       return {
         ...state,
-        subreddits: {
-          ...state.subreddits,
-          [payload.subreddit]: {
-            posts: payload.more
-              ? payload.posts
-              : [
-                  ...state.subreddits[payload.subreddit].posts,
-                  ...payload.posts
-                ],
-            before: payload.before,
-            after: payload.after
-          }
+        [payload.subreddit]: {
+          posts: !payload.more
+            ? payload.posts
+            : [...state[payload.subreddit].posts, ...payload.posts],
+          before: payload.before,
+          after: payload.after
         }
       }
     case setLoadingState:
-      return { ...state, loadingPosts: payload.isLoading }
+      return { ...state, loadingPosts: payload }
     case setErrorState:
-      return { ...state, error: payload.error }
+      return { ...state, error: payload }
     default:
       return state
   }

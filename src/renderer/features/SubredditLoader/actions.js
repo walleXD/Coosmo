@@ -4,7 +4,7 @@ import {
   setErrorState as setErrorStateType
 } from "./types"
 
-// import { getPosts as nautGetPosts } from "../../naut"
+import { getPosts as nautGetPosts } from "../../naut"
 
 export const setPosts = payload => ({
   type: setPostsType,
@@ -21,4 +21,24 @@ export const setErrorState = payload => ({
   payload
 })
 
-export const getPosts = payload => dispatch => {}
+export const getPosts = payload => async (
+  dispatch,
+  getState,
+  { coosmonaut }
+) => {
+  const { subreddit } = payload
+  try {
+    console.log(subreddit, coosmonaut.getAuthTokens())
+    dispatch(setLoadingState(true))
+    const { children: posts, before, after } = await nautGetPosts(coosmonaut)({
+      subreddit
+    })
+    console.log(posts)
+    dispatch(setLoadingState(false))
+    dispatch(setPosts({ subreddit, posts, before, after }))
+  } catch (e) {
+    console.log(e.message)
+    dispatch(setLoadingState(false))
+    dispatch(setErrorState(e.message))
+  }
+}

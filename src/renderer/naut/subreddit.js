@@ -1,19 +1,18 @@
 import fetch from "cross-fetch"
 
 export const getPosts = client => async ({ subreddit, sort }) => {
-  const url = `https://api.reddit.com/r/${subreddit}/${sort || ""}`
+  const url = `https://api.reddit.com/r/${subreddit}`
+  const accessToken = client.getAuthTokens()
+  console.log(accessToken)
   const fetchConfig = {
     method: "get",
     headers: {
-      Authorization: `bearer ${client.getAuthTokens().accessToken}`
+      Authorization: `bearer ${accessToken}`
     }
   }
-  try {
-    const rawResponse = await fetch(url, fetchConfig)
-    const { data } = await rawResponse.json()
-    console.log(data)
-    return data
-  } catch (e) {
-    throw new Error(e.message)
-  }
+  const rawResponse = await fetch(url, fetchConfig)
+  const { data, ...rest } = await rawResponse.json()
+  console.log(data, rest)
+  if (!data) throw new Error(`${rest.error}: ${rest.message}`)
+  return data
 }

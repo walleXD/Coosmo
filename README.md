@@ -10,6 +10,7 @@ All journies start small, so atm we are focused on building out a POI(Proof of C
 
 ## TODOs
 
-- [ ] Load up subreddits w/ posts
+- [x] Load up subreddits w/ posts
 - [ ] Load up posts w/ comments
+- [ ] Clean up UI
 - [ ] Load up exterior contents in webviews for secure viewing

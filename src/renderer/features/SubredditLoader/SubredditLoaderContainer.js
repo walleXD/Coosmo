@@ -77,7 +77,7 @@ class SubredditloaderContainer extends PureComponent {
             rowCount={posts.length}
             deferredMeasurementCache={this.cache}
             rowHeight={this.cache.rowHeight}
-            overscanRowCount={20}
+            overscanRowCount={5}
             rowRenderer={this._renderRows}
           />
         )}

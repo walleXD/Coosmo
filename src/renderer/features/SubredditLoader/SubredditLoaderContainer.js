@@ -10,6 +10,7 @@ import {
 import { compose } from "recompose"
 import { withStyles, Button } from "@material-ui/core"
 import { getPosts, setLoadingState } from "./actions"
+
 import PostCard from "./PostCard"
 
 const styles = () => ({
@@ -44,6 +45,25 @@ class SubredditloaderContainer extends PureComponent {
     getPosts({ subreddit, after })
   }
 
+  _renderRows = ({ index, isScrolling, parent, key, style }) => {
+    const { subreddit, subreddits } = this.props
+    const { posts } = subreddits[subreddit]
+    return (
+      <CellMeasurer
+        className="Row"
+        key={key}
+        cache={this.cache}
+        parent={parent}
+        columnIndex={0}
+        rowIndex={index}
+      >
+        <div style={style}>
+          <PostCard {...posts[index].data} />
+        </div>
+      </CellMeasurer>
+    )
+  }
+
   _renderPosts() {
     const { subreddit, subreddits } = this.props
     const { posts } = subreddits[subreddit]
@@ -58,18 +78,7 @@ class SubredditloaderContainer extends PureComponent {
             deferredMeasurementCache={this.cache}
             rowHeight={this.cache.rowHeight}
             overscanRowCount={20}
-            rowRenderer={({ index, isScrolling, parent, key, style }) => (
-              <CellMeasurer
-                className="Row"
-                key={key}
-                cache={this.cache}
-                parent={parent}
-                columnIndex={0}
-                rowIndex={index}
-              >
-                <PostCard {...posts[index].data} style={style} />
-              </CellMeasurer>
-            )}
+            rowRenderer={this._renderRows}
           />
         )}
       </AutoSizer>

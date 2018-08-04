@@ -6,6 +6,7 @@ import allEpics from "../epics"
 import initNaut from "../naut"
 import createStore from "../utils/initStore"
 
+import "react-virtualized/styles.css" // only needs to be imported once
 import "typeface-roboto/index.css"
 import "material-design-icons/iconfont/material-icons.css"
 

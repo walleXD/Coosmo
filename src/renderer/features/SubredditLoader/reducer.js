@@ -12,16 +12,21 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case setPosts:
-      return {
+      const newState = {
         ...state,
         [payload.subreddit]: {
-          posts: !payload.more
-            ? payload.posts
-            : [...state[payload.subreddit].posts, ...payload.posts],
+          posts: [
+            ...(typeof state[payload.subreddit] === "undefined"
+              ? []
+              : state[payload.subreddit].posts),
+            ...payload.posts
+          ],
           before: payload.before,
           after: payload.after
         }
       }
+      console.log("reducer state", newState)
+      return newState
     case setLoadingState:
       return { ...state, loadingPosts: payload }
     case setErrorState:

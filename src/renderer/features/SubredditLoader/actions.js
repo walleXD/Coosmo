@@ -26,12 +26,14 @@ export const getPosts = payload => async (
   getState,
   { coosmonaut }
 ) => {
-  const { subreddit } = payload
+  const { subreddit, after: afterParam, before: beforeParam } = payload
   try {
     console.log(subreddit, coosmonaut.getAuthTokens())
     dispatch(setLoadingState(true))
     const { children: posts, before, after } = await nautGetPosts(coosmonaut)({
-      subreddit
+      subreddit,
+      after: afterParam,
+      before: beforeParam
     })
     console.log(posts)
     dispatch(setLoadingState(false))

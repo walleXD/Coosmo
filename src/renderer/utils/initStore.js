@@ -21,7 +21,10 @@ export default (
     epicMiddleware,
     thunkMiddleware.withExtraArgument({ coosmonaut })
   ]
-  const devMiddlewares = [require("redux-logger").default]
+  const devMiddlewares = [
+    require("redux-logger").default,
+    require("redux-immutable-state-invariant").default()
+  ]
   const middlewares = [...prodMiddlewares, ...(isDev ? devMiddlewares : [])]
 
   // Setup store

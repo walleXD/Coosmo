@@ -52,17 +52,15 @@ class SubredditloaderContainer extends PureComponent {
     return !!posts[i]
   }
 
-  _loadMoreRows = ({ startIndex, stopIndex }) => {
-    return new Promise((resolve, reject) => {
+  _loadMoreRows = ({ startIndex, stopIndex }) =>
+    new Promise((resolve, reject) => {
       this._getMorePosts()
       if (!this.props.subreddits.loadingPosts) resolve()
     })
-  }
 
   _renderRows = ({ index, isScrolling, parent, key, style, ...rest }) => {
     const { subreddit, subreddits } = this.props
     const { posts } = subreddits[subreddit]
-    console.log("renderRow props", rest)
     return (
       <CellMeasurer
         className="Row"
@@ -85,6 +83,7 @@ class SubredditloaderContainer extends PureComponent {
         isRowLoaded={this._isRowLoaded}
         loadMoreRows={this._loadMoreRows}
         rowCount={30000}
+        threshold={15}
       >
         {({ onRowsRendered, registerChild }) => (
           <AutoSizer>

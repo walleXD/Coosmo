@@ -15,7 +15,6 @@ export const getPosts = client => async ({
   }
   fetchURL.search = new URLSearchParams(fetchParams)
   const accessToken = client.getAuthTokens()
-  console.log(accessToken)
   const fetchConfig = {
     method: "get",
     headers: {
@@ -24,7 +23,7 @@ export const getPosts = client => async ({
   }
   const rawResponse = await fetch(fetchURL, fetchConfig)
   const { data, ...rest } = await rawResponse.json()
-  console.log(data, rest)
+  // console.log(data, rest)
   if (!data) throw new Error(`${rest.error}: ${rest.message}`)
   return data
 }

@@ -5,7 +5,8 @@ import {
   List,
   AutoSizer,
   CellMeasurer,
-  CellMeasurerCache
+  CellMeasurerCache,
+  InfiniteLoader
 } from "react-virtualized"
 import { compose } from "recompose"
 import { withStyles, Button } from "@material-ui/core"
@@ -45,9 +46,23 @@ class SubredditloaderContainer extends PureComponent {
     getPosts({ subreddit, after })
   }
 
-  _renderRows = ({ index, isScrolling, parent, key, style }) => {
+  _isRowLoaded = ({ index: i }) => {
+    const { subreddits, subreddit } = this.props
+    const posts = subreddits[subreddit].posts
+    return !!posts[i]
+  }
+
+  _loadMoreRows = ({ startIndex, stopIndex }) => {
+    return new Promise((resolve, reject) => {
+      this._getMorePosts()
+      if (!this.props.subreddits.loadingPosts) resolve()
+    })
+  }
+
+  _renderRows = ({ index, isScrolling, parent, key, style, ...rest }) => {
     const { subreddit, subreddits } = this.props
     const { posts } = subreddits[subreddit]
+    console.log("renderRow props", rest)
     return (
       <CellMeasurer
         className="Row"
@@ -57,9 +72,7 @@ class SubredditloaderContainer extends PureComponent {
         columnIndex={0}
         rowIndex={index}
       >
-        <div style={style}>
-          <PostCard {...posts[index].data} />
-        </div>
+        <PostCard {...posts[index].data} style={style} />
       </CellMeasurer>
     )
   }
@@ -68,20 +81,30 @@ class SubredditloaderContainer extends PureComponent {
     const { subreddit, subreddits } = this.props
     const { posts } = subreddits[subreddit]
     return (
-      <AutoSizer>
-        {({ width, height }) => (
-          <List
-            scrollToAlignment="start"
-            width={width}
-            height={height}
-            rowCount={posts.length}
-            deferredMeasurementCache={this.cache}
-            rowHeight={this.cache.rowHeight}
-            overscanRowCount={5}
-            rowRenderer={this._renderRows}
-          />
+      <InfiniteLoader
+        isRowLoaded={this._isRowLoaded}
+        loadMoreRows={this._loadMoreRows}
+        rowCount={30000}
+      >
+        {({ onRowsRendered, registerChild }) => (
+          <AutoSizer>
+            {({ width, height }) => (
+              <List
+                onRowsRendered={onRowsRendered}
+                ref={registerChild}
+                scrollToAlignment="start"
+                width={width}
+                height={height}
+                rowCount={posts.length}
+                deferredMeasurementCache={this.cache}
+                rowHeight={this.cache.rowHeight}
+                overscanRowCount={5}
+                rowRenderer={this._renderRows}
+              />
+            )}
+          </AutoSizer>
         )}
-      </AutoSizer>
+      </InfiniteLoader>
     )
   }
 
